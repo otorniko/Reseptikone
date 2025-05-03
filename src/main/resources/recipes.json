@@ -1,0 +1,41 @@
+[
+    {
+        "name": "Helppo Lohikeitto",
+        "ingredients": ["Lohi", "Peruna", "Sipuli"],
+        "timeMinutes": 30,
+        "portions": 4,
+        "erityisruokavalio": ["Gluteeniton", "Maidoton"],
+        "steps": [
+            "Kiehauta vettä kattilassa.",
+            "Kuutioi lohi ja vihannekset.",
+            "Lisää lohi ja vihannekset kattilaan.",
+            "Anna kiehua 20 minuuttia."
+        ]
+    },
+    {
+        "name": "Nopea Lohikeitto",
+        "ingredients": ["Lohi", "Peruna", "Sipuli"],
+        "timeMinutes": 15,
+        "portions": 4,
+        "erityisruokavalio": ["Gluteeniton", "Maidoton"],
+        "steps": [
+            "Kiehauta vettä kattilassa.",
+            "Kuutioi lohi ja vihannekset.",
+            "Lisää lohi ja vihannekset kattilaan.",
+            "Anna kiehua 10 minuuttia."
+        ]
+    },
+    {
+        "name": "Hidas Lohikeitto",
+        "ingredients": ["Lohi", "Peruna", "Sipuli"],
+        "timeMinutes": 45,
+        "portions": 4,
+        "erityisruokavalio": ["Gluteeniton", "Maidoton"],
+        "steps": [
+            "Kiehauta vettä kattilassa.",
+            "Kuutioi lohi ja vihannekset.",
+            "Lisää lohi ja vihannekset kattilaan.",
+            "Anna kiehua 30 minuuttia."
+        ]
+    }
+]

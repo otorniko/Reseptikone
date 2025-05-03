@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Sokeri",
+    "category": "Mausteet", 
+    "tags": ["Spice", "Sweetener", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Suola",
+    "category": "Mausteet", 
+    "tags": ["Spice", "Seasoning"]
+  },
+  {
+    "name": "Mustapippuri",
+    "category": "Mausteet", 
+    "tags": ["Spice", "Seasoning", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Peruna",
+    "category": "Kasvikset", 
+    "tags": ["Vegetable", "Vegetarian", "Vegan", "Root"]
+  },
+  {
+    "name": "Porkkana",
+    "category": "Kasvikset", 
+    "tags": ["Vegetable", "Vegetarian", "Vegan", "Root"]
+  },
+  {
+    "name": "Sipuli",
+    "category": "Kasvikset", 
+    "tags": ["Vegetable", "Vegetarian", "Vegan", "Aromatic"]
+  },
+  {
+    "name": "Ankanmaksa",
+    "category": "Proteiinit", 
+    "tags": ["Protein", "Meat"]
+  },
+  {
+    "name": "Jauheliha",
+    "category": "Proteiinit", 
+    "tags": ["Protein", "Meat"]
+  },
+  {
+    "name": "Lohi",
+    "category": "Proteiinit", 
+    "tags": ["Protein", "Fish", "Seafood"]
+  }
+]
