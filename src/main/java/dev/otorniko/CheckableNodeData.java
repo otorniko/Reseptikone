@@ -22,8 +22,6 @@ public class CheckableNodeData {
 
     @Override
     public String toString() {
-        // DefaultTreeCellRenderer uses toString() to display node text
-        // if not overridden by a custom renderer component's text setting.
         return text;
     }
 }

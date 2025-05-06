@@ -47,21 +47,17 @@ public class SidebarPanel extends JPanel {
         ingredientTree = new JTree(treeModel);
         ingredientTree.setRootVisible(false);
         ingredientTree.setCellRenderer(new CheckboxTreeCellRenderer());
-
         ingredientTree.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 int row = ingredientTree.getRowForLocation(e.getX(), e.getY());
                 if (row == -1)
                     return;
-
                 TreePath path = ingredientTree.getPathForRow(row);
                 if (path == null)
                     return;
-
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
                 Object userObject = node.getUserObject();
-
                 if (node.isLeaf() && userObject instanceof CheckableNodeData) {
                     CheckableNodeData data = (CheckableNodeData) userObject;
                     data.setChecked(!data.isChecked());
@@ -84,7 +80,6 @@ public class SidebarPanel extends JPanel {
 
     private void loadAndBuildTree() {
         List<IngredientData> ingredients = loadIngredientsFromJson("ingredients.json");
-
         if (ingredients == null) {
             rootNode.add(new DefaultMutableTreeNode("Error loading ingredients!"));
             treeModel.reload(); 
@@ -106,18 +101,14 @@ public class SidebarPanel extends JPanel {
         for (Map.Entry<String, List<IngredientData>> entry : categorizedIngredients.entrySet()) {
             String categoryName = entry.getKey();
             List<IngredientData> itemsInCategory = entry.getValue();
-            
             itemsInCategory.sort((i1, i2) -> i1.getName().compareToIgnoreCase(i2.getName()));
-
             DefaultMutableTreeNode categoryNode = new DefaultMutableTreeNode(categoryName);
             for (IngredientData item : itemsInCategory) {
                 categoryNode.add(new DefaultMutableTreeNode(new CheckableNodeData(item.getName(), false)));
             }
             rootNode.add(categoryNode);
         }
-
         treeModel.reload(rootNode);
-
         for (int i = 0; i < ingredientTree.getRowCount(); i++) {
             TreePath path = ingredientTree.getPathForRow(i);
             if (path != null && path.getPathCount() == 2) {

@@ -1,41 +1,109 @@
 [
     {
         "name": "Helppo Lohikeitto",
-        "ingredients": ["Lohi", "Peruna", "Sipuli"],
+        "ingredients": ["Lohi", "Peruna", "Sipuli", "Porkkana", "Suola", "Mustapippuri"],
         "timeMinutes": 30,
         "portions": 4,
-        "erityisruokavalio": ["Gluteeniton", "Maidoton"],
+        "erityisruokavalio": ["Gluteeniton"],
         "steps": [
-            "Kiehauta vettä kattilassa.",
-            "Kuutioi lohi ja vihannekset.",
-            "Lisää lohi ja vihannekset kattilaan.",
-            "Anna kiehua 20 minuuttia."
+            "Kuori ja pilko perunat ja porkkanat.",
+            "Hienonna sipuli.",
+            "Kiehauta kasvisliemi ja lisää juurekset sekä sipuli. Keitä noin 10 min.",
+            "Lisää lohikuutiot ja anna kypsyä 5-7 min.",
+            "Mausta suolalla, pippurilla ja tillillä."
         ]
     },
     {
         "name": "Nopea Lohikeitto",
-        "ingredients": ["Lohi", "Peruna", "Sipuli"],
+        "ingredients": ["Lohi", "Peruna", "Sipuli", "Suola"],
         "timeMinutes": 15,
-        "portions": 4,
-        "erityisruokavalio": ["Gluteeniton", "Maidoton"],
+        "portions": 2,
+        "erityisruokavalio": ["Gluteeniton"],
         "steps": [
-            "Kiehauta vettä kattilassa.",
-            "Kuutioi lohi ja vihannekset.",
-            "Lisää lohi ja vihannekset kattilaan.",
-            "Anna kiehua 10 minuuttia."
+            "Pilko perunat ja sipuli.",
+            "Keitä perunoita ja sipulia kalaliemessä 5 min.",
+            "Lisää lohi ja keitä vielä 5 min.",
+            "Mausta."
         ]
     },
     {
-        "name": "Hidas Lohikeitto",
-        "ingredients": ["Lohi", "Peruna", "Sipuli"],
-        "timeMinutes": 45,
-        "portions": 4,
-        "erityisruokavalio": ["Gluteeniton", "Maidoton"],
+        "name": "Hidas Jauhelihakastike",
+        "ingredients": ["Jauheliha", "Sipuli", "Porkkana", "Tomaatti", "Valkosipuli", "Oliiviöljy", "Suola", "Mustapippuri", "Oregano"],
+        "timeMinutes": 75,
+        "portions": 6,
+        "erityisruokavalio": [],
         "steps": [
-            "Kiehauta vettä kattilassa.",
-            "Kuutioi lohi ja vihannekset.",
-            "Lisää lohi ja vihannekset kattilaan.",
-            "Anna kiehua 30 minuuttia."
+            "Kuullota sipulia ja valkosipulia oliiviöljyssä.",
+            "Lisää jauheliha ja ruskista.",
+            "Lisää raastettu porkkana ja pilkottu tomaatti.",
+            "Mausta ja anna hautua miedolla lämmöllä vähintään 1 tunti.",
+            "Tarjoile pastan kanssa."
+        ]
+    },
+    {
+        "name": "Kanapasta",
+        "ingredients": ["Kana", "Pasta", "Sipuli", "Paprika", "Oliiviöljy", "Suola", "Mustapippuri", "Basilika"],
+        "timeMinutes": 25,
+        "portions": 4,
+        "erityisruokavalio": [],
+        "steps": [
+            "Keitä pasta ohjeen mukaan.",
+            "Suikaloi kana ja paprika, hienonna sipuli.",
+            "Paista kana oliiviöljyssä.",
+            "Lisää sipuli ja paprika, paista kunnes pehmenevät.",
+            "Sekoita valutettu pasta ja kanaseos. Mausta ja lisää basilika."
+        ]
+    },
+    {
+        "name": "Tofu-kasviswokki (Vegaani)",
+        "ingredients": ["Tofu", "Riisi", "Porkkana", "Paprika", "Sipuli", "Valkosipuli", "Chili", "Oliiviöljy"],
+        "timeMinutes": 20,
+        "portions": 3,
+        "erityisruokavalio": ["Vegaani", "Gluteeniton"],
+        "steps": [
+            "Keitä riisi.",
+            "Kuutioi tofu ja paista rapeaksi öljyssä.",
+            "Suikaloi kasvikset.",
+            "Wokkaa kasviksia, valkosipulia ja chiliä muutama minuutti.",
+            "Lisää tofu ja mausta soijakastikkeella (ei listattu ainesosana). Tarjoile riisin kanssa."
+        ]
+    },
+    {
+        "name": "Linssikeitto (Kasvis, Helppo)",
+        "ingredients": ["Kikherne", "Porkkana", "Sipuli", "Valkosipuli", "Tomaatti", "Oliiviöljy", "Suola", "Mustapippuri", "Chili"],
+        "timeMinutes": 35,
+        "portions": 4,
+        "erityisruokavalio": ["Kasvis", "Vegaani", "Gluteeniton"],
+        "steps": [
+            "Hienonna sipuli ja valkosipuli. Kuullota öljyssä.",
+            "Lisää kuutioitu porkkana ja tomaattimurska.",
+            "Lisää linssit/kikherneet ja kasvisliemi. Keitä 20 min.",
+            "Mausta ja soseuta halutessasi."
+        ]
+    },
+    {
+        "name": "Perunasalaatti (Nopea)",
+        "ingredients": ["Peruna", "Sipuli", "Kurkku", "Oliiviöljy", "Suola", "Mustapippuri"],
+        "timeMinutes": 10,
+        "portions": 4,
+        "erityisruokavalio": ["Kasvis", "Vegaani", "Gluteeniton"],
+        "steps": [
+            "Keitä ja jäähdytä perunat (tai käytä valmiiksi keitettyjä).",
+            "Pilko perunat, sipuli ja kurkku.",
+            "Sekoita oliiviöljy, suola ja pippuri kastikkeeksi.",
+            "Yhdistä ainekset."
+        ]
+    },
+    {
+        "name": "Ankanmaksa Alkuruoka (Hieno)",
+        "ingredients": ["Ankanmaksa", "Leipä", "Sokeri", "Oliiviöljy"],
+        "timeMinutes": 18,
+        "portions": 2,
+        "erityisruokavalio": [],
+        "steps": [
+            "Paahda leipäviipaleet.",
+            "Paista ankanmaksaviipaleita kuumalla pannulla oliiviöljyssä nopeasti molemmin puolin.",
+            "Ripottele hieman sokeria päälle ja tarjoile heti paahdetun leivän kanssa."
         ]
     }
 ]

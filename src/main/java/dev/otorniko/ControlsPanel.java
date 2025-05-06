@@ -15,7 +15,7 @@ public class ControlsPanel extends JPanel {
     private JComboBox<String> sortComboBox;
     private JToggleButton nopeatButton; 
     private JToggleButton helpotButton;
-    private JButton showAllFiltersButton; 
+    private JComboBox<String> filterComboBox;
 
     public ControlsPanel() {
         super();
@@ -51,32 +51,30 @@ public class ControlsPanel extends JPanel {
         dietAndInfoPanel.add(infoButton, BorderLayout.EAST);
         dietAndInfoPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-
-        JPanel sortFilterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 2));
+        JPanel sortFilterPanel = new JPanel();
+        sortFilterPanel.setLayout(new BoxLayout(sortFilterPanel, BoxLayout.X_AXIS)); 
         sortFilterPanel.add(new JLabel("Järjestä:"));
+        sortFilterPanel.add(Box.createHorizontalStrut(5));
         sortComboBox = new JComboBox<>(new String[]{"Oletus", "Nimi A-Ö", "Aika Lyhin"});
-
+        sortComboBox.setMaximumSize(sortComboBox.getPreferredSize());
         sortFilterPanel.add(sortComboBox);
-        sortFilterPanel.add(Box.createHorizontalStrut(15));
+        sortFilterPanel.add(Box.createHorizontalGlue());
         sortFilterPanel.add(new JLabel("Suodattimet:"));
-
+        sortFilterPanel.add(Box.createHorizontalStrut(5));
         nopeatButton = new JToggleButton("Nopeat");
         helpotButton = new JToggleButton("Helpot");
-        showAllFiltersButton = new JButton("Poista suodattimet"); 
-
+        filterComboBox = new JComboBox<>(new String[]{"Näytä Kaikki", "Hitaat", "Vaikeat", "Koko Perheelle"});
+        filterComboBox.setMaximumSize(filterComboBox.getPreferredSize()); 
         sortFilterPanel.add(nopeatButton);
+        sortFilterPanel.add(Box.createHorizontalStrut(5));
         sortFilterPanel.add(helpotButton);
-        sortFilterPanel.add(showAllFiltersButton);
-        sortFilterPanel.setAlignmentX(Component.LEFT_ALIGNMENT); 
+        sortFilterPanel.add(Box.createHorizontalStrut(5));
+        sortFilterPanel.add(filterComboBox); 
+        sortFilterPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         add(dietAndInfoPanel);
-        add(Box.createVerticalStrut(5)); 
+        add(Box.createVerticalStrut(5));
         add(sortFilterPanel);
-
-        showAllFiltersButton.addActionListener(e -> {
-            if (nopeatButton != null) nopeatButton.setSelected(false);
-            if (helpotButton != null) helpotButton.setSelected(false);
-        });
     }
 
     public String getSelectedDietOption() {
@@ -92,12 +90,31 @@ public class ControlsPanel extends JPanel {
         return "Oletus";
     }
 
+    public String getSelectedFilterOption() {
+        if (filterComboBox != null) {
+            return (String) filterComboBox.getSelectedItem();
+        }
+        return "Näytä Kaikki";
+    }
+
     public boolean isNopeatFilterActive() {
         return nopeatButton != null && nopeatButton.isSelected();
     }
 
     public boolean isHelpotFilterActive() {
         return helpotButton != null && helpotButton.isSelected();
+    }
+
+    public boolean isHitaatFilterActive() {
+        return filterComboBox != null && filterComboBox.getSelectedItem().equals("Hitaat");
+    }
+
+    public boolean isVaikeatFilterActive() {
+        return filterComboBox != null && filterComboBox.getSelectedItem().equals("Vaikeat");
+    }
+
+    public boolean isKokoPerheelleFilterActive() {
+        return filterComboBox != null && filterComboBox.getSelectedItem().equals("Koko Perheelle");
     }
 
     public void addControlChangeListener(ActionListener listener) {
@@ -112,7 +129,10 @@ public class ControlsPanel extends JPanel {
         // Filter Toggle Buttons 
         if (nopeatButton != null) nopeatButton.addActionListener(listener);
         if (helpotButton != null) helpotButton.addActionListener(listener);
-        if (showAllFiltersButton != null) showAllFiltersButton.addActionListener(listener);
+        
+        // Filter Combo Box
+        if (filterComboBox != null) filterComboBox.addActionListener(listener);
+
     }
 
     private void showHelpDialog() {

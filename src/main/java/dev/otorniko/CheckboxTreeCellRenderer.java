@@ -22,7 +22,6 @@ public class CheckboxTreeCellRenderer extends JCheckBox implements TreeCellRende
         if (value instanceof DefaultMutableTreeNode) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
             Object userObject = node.getUserObject();
-
             if (leaf && userObject instanceof CheckableNodeData) {
                 CheckableNodeData data = (CheckableNodeData) userObject;
                 this.setText(data.getText());

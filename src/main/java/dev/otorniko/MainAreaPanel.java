@@ -19,25 +19,22 @@ public class MainAreaPanel extends JPanel {
     private void initComponents() {
         controlsPanel = new ControlsPanel();
         add(controlsPanel, BorderLayout.NORTH);
-
         resultsPanel = new ResultsPanel();
         resultsPanel.setRecipeActionCallback(this::showRecipeDetails);
-
         resultsScrollPane = new JScrollPane(resultsPanel);
+        resultsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        resultsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         add(resultsScrollPane, BorderLayout.CENTER);
     }
 
     private void showRecipeDetails(RecipeData recipe) {
-
         if (detailPanel != null) {
             remove(detailPanel);
             detailPanel = null;
         }
         remove(resultsScrollPane);
-
         detailPanel = new RecipeDetailPanel(recipe);
         detailPanel.getBackButton().addActionListener(e -> showResults());
-
         add(detailPanel, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -48,7 +45,6 @@ public class MainAreaPanel extends JPanel {
             remove(detailPanel);
             detailPanel = null;
         }
-
         add(resultsScrollPane, BorderLayout.CENTER);
         revalidate();
         repaint();
@@ -57,9 +53,11 @@ public class MainAreaPanel extends JPanel {
     public ControlsPanel getControlsPanel() {
         return controlsPanel;
     }
+    
     public ResultsPanel getResultsPanel() {
         return resultsPanel;
     }
+
     public RecipeDetailPanel getDetailPanel() {
         return detailPanel;
     }

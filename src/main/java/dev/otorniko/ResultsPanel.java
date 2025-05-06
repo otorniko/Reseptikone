@@ -1,13 +1,11 @@
 package dev.otorniko;
+
 import javax.swing.*;
-
-
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.function.Consumer;
-
 
 public class ResultsPanel extends JPanel {
 
@@ -15,10 +13,9 @@ public class ResultsPanel extends JPanel {
     private Consumer<RecipeData> recipeActionCallback = null;
 
     public ResultsPanel() {
-        super(new GridBagLayout());
-        setLayout(new GridBagLayout());
+        super(new WrapLayout(WrapLayout.CENTER, 10, 10));
         initComponents();
-        showStatusMessage("<html><div style='text-align: center;'>Ei tuloksia...<br>Lisää raaka-aineita löytääksesi resepti</div></html>");
+        showStatusMessage("Valitse raaka-aineita löytääksesi reseptejä.");
     }
 
     public void setRecipeActionCallback(Consumer<RecipeData> callback) {
@@ -30,7 +27,11 @@ public class ResultsPanel extends JPanel {
         statusLabel.setFont(statusLabel.getFont().deriveFont(16f));
         statusLabel.setForeground(Color.GRAY);
         statusLabel.setHorizontalAlignment(JLabel.CENTER);
-        add(statusLabel, new GridBagConstraints());
+    }
+
+    @Override
+    public void removeAll() {
+        super.removeAll();
     }
 
     public void showStatusMessage(String message) {
@@ -43,18 +44,19 @@ public class ResultsPanel extends JPanel {
     }
 
     public void displayRecipes(List<RecipeData> recipes) {
-         removeAll();
-        setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+        
+        removeAll();
+        setLayout(new WrapLayout(WrapLayout.CENTER, 10, 10));
 
         for (RecipeData recipe : recipes) {
             JPanel recipePanel = createRecipeCard(recipe);
             add(recipePanel);
         }
-         revalidate();
-         repaint();
+        revalidate();
+        repaint();
     }
 
-    private JPanel createRecipeCard(RecipeData recipe) {
+    private JPanel createRecipeCard(final RecipeData recipe) {
         JPanel card = new JPanel(new BorderLayout(5, 5));
         card.setBorder(BorderFactory.createEtchedBorder());
 
@@ -77,31 +79,25 @@ public class ResultsPanel extends JPanel {
         detailsScrollPane.setBorder(null);
         card.add(detailsScrollPane, BorderLayout.CENTER);
 
-        card.setPreferredSize(new Dimension(200, 150));
-
+        card.setPreferredSize(new Dimension(220, 180));
         card.addMouseListener(new MouseAdapter() {
-            @Override
+             @Override
             public void mousePressed(MouseEvent e) {
                 if (recipeActionCallback != null) {
                     recipeActionCallback.accept(recipe);
-                } else {
-                    System.err.println("WARN: recipeActionCallback is null in ResultsPanel.");
                 }
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 card.setBackground(Color.LIGHT_GRAY);
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
                 card.setCursor(Cursor.getDefaultCursor());
-                card.setBackground(UIManager.getColor("Panel.background")); 
+                card.setBackground(UIManager.getColor("Panel.background"));
             }
         });
         return card;
     }
-
 }

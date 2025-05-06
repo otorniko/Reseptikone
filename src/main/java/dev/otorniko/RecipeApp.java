@@ -28,7 +28,7 @@ public class RecipeApp extends JFrame {
     public RecipeApp() {
         super("Reseptikone");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setPreferredSize(new Dimension(850, 600));
+        setPreferredSize(new Dimension(980, 600));
         setLayout(new BorderLayout(5, 0));
 
         sidebarPanel = new SidebarPanel();
@@ -52,7 +52,7 @@ public class RecipeApp extends JFrame {
         if (inputStream == null) {
             JOptionPane.showMessageDialog(this,
                     "Virhe: Reseptitiedostoa '" + resourcePath + "' ei löytynyt!",
-                    "Latausvirhe", JOptionPane.ERROR_MESSAGE);
+                    "Lukuvirhe", JOptionPane.ERROR_MESSAGE);
             this.allLoadedRecipes = Collections.emptyList();
             return;
         }
@@ -71,14 +71,14 @@ public class RecipeApp extends JFrame {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
                     "Virhe: Reseptitiedoston syntaksi virheellinen:\n" + e.getMessage(),
-                    "Latausvirhe", JOptionPane.ERROR_MESSAGE);
+                    "Lukuvirhe", JOptionPane.ERROR_MESSAGE);
             this.allLoadedRecipes = Collections.emptyList();
         } catch (Exception e) {
             System.err.println("FATAL ERROR: Error reading recipe resource: " + resourcePath);
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
                     "Virhe: Reseptitiedoston lukuvirhe:\n" + e.getMessage(),
-                    "Latausvirhe", JOptionPane.ERROR_MESSAGE);
+                    "Lukuvirhe", JOptionPane.ERROR_MESSAGE);
             this.allLoadedRecipes = Collections.emptyList();
         }
     }
@@ -114,6 +114,9 @@ public class RecipeApp extends JFrame {
         String selectedDiet = controls.getSelectedDietOption();
         boolean isNopeat = controls.isNopeatFilterActive();
         boolean isHelpot = controls.isHelpotFilterActive();
+        boolean isHitaat = controls.isHitaatFilterActive();
+        boolean isVaikeat = controls.isVaikeatFilterActive();
+        boolean isKokoPerheelle = controls.isKokoPerheelleFilterActive();
         String sortOption = controls.getSelectedSortOption();
         List<RecipeData> filteredRecipes = new ArrayList<>(allLoadedRecipes);
 
@@ -133,29 +136,54 @@ public class RecipeApp extends JFrame {
             mainAreaPanel.getResultsPanel().showStatusMessage("Valitse raaka-aineita löytääksesi reseptejä.");
             return;
         }
-
-        if (!"Ei ole".equalsIgnoreCase(selectedDiet)) {
-            filteredRecipes = filteredRecipes.stream()
-                    .filter(recipe -> recipe.getErityisruokavalio() != null &&
-                            recipe.getErityisruokavalio().stream()
-                                    .anyMatch(diet -> diet.equalsIgnoreCase(selectedDiet)))
-                    .collect(Collectors.toList());
+        if (!"Ei ole".equalsIgnoreCase(selectedDiet)) { 
+        final String selectedDietLower = selectedDiet.toLowerCase();
+        filteredRecipes = filteredRecipes.stream()
+           .filter(recipe -> {
+               List<String> recipeDiets = recipe.getErityisruokavalio();
+               if (recipeDiets == null || recipeDiets.isEmpty()) {
+                   return false;
+               }
+               Set<String> recipeDietsLower = recipeDiets.stream()
+                                                         .map(String::toLowerCase)
+                                                         .collect(Collectors.toSet());
+               if ("kasvis".equals(selectedDietLower)) {
+                   return recipeDietsLower.contains("kasvis") || recipeDietsLower.contains("vegaani");
+               } else {
+                   return recipeDietsLower.contains(selectedDietLower);
+               }
+           })
+           .collect(Collectors.toList());
         }
-
         if (isNopeat) {
             final int maxTimeMinutesForNopeat = 20;
             filteredRecipes = filteredRecipes.stream()
                     .filter(recipe -> recipe.getTimeMinutes() <= maxTimeMinutesForNopeat)
                     .collect(Collectors.toList());
         }
-
         if (isHelpot) {
-            final int maxStepsForHelpot = 5;
+            final int maxStepsForHelpot = 3;
             filteredRecipes = filteredRecipes.stream()
                     .filter(recipe -> recipe.getSteps() != null && recipe.getSteps().size() <= maxStepsForHelpot)
                     .collect(Collectors.toList());
         }
-
+        if (isHitaat) {
+            final int maxTimeMinutesForHitaat = 60;
+            filteredRecipes = filteredRecipes.stream()
+                    .filter(recipe -> recipe.getTimeMinutes() > maxTimeMinutesForHitaat)
+                    .collect(Collectors.toList());
+        }
+        if(isVaikeat) {
+            final int minStepsForVaikeat = 5;
+            filteredRecipes = filteredRecipes.stream()
+                    .filter(recipe -> recipe.getSteps() != null && recipe.getSteps().size() >= minStepsForVaikeat)
+                    .collect(Collectors.toList());
+        }              
+        if(isKokoPerheelle) {
+            filteredRecipes = filteredRecipes.stream()
+                    .filter(recipe -> recipe.getPortions() > 2)
+                    .collect(Collectors.toList());
+        }
         if (sortOption != null) {
             switch (sortOption) {
                 case "Aika Lyhin":
@@ -168,7 +196,6 @@ public class RecipeApp extends JFrame {
                     break;
             }
         }
-
         ResultsPanel results = mainAreaPanel.getResultsPanel();
         if (filteredRecipes.isEmpty()) {
             if (selectedIngredients != null && !selectedIngredients.isEmpty()) {
