@@ -1,5 +1,8 @@
 package dev.otorniko;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -17,10 +20,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
+/**
+ * Luokka, joka esittää sivupaneelin, jossa käyttäjä voi valita raaka-aineita.
+ * Tämä luokka käyttää JTree-luokkaa raaka-aineiden esittämiseen puumaisessa
+ * rakenteessa.
+ */
 public class SidebarPanel extends JPanel {
 
     private JTextField searchField;
@@ -37,10 +41,11 @@ public class SidebarPanel extends JPanel {
         loadAndBuildTree();
     }
 
-    public void setSelectionChangeCallback(Runnable callback) {
-        this.onSelectionChangeCallback = callback;
-    }
+    public void setSelectionChangeCallback(Runnable callback) { this.onSelectionChangeCallback = callback; }
 
+    /**
+     * Alustaa SidebarPanelin komponentit, mukaan lukien raaka-ainepuun.
+     */
     private void initComponents() {
         rootNode = new DefaultMutableTreeNode("Raaka-aineet");
         treeModel = new DefaultTreeModel(rootNode);
@@ -72,17 +77,20 @@ public class SidebarPanel extends JPanel {
             }
         });
 
-        ingredientTree.getSelectionModel().setSelectionMode(
-                TreeSelectionModel.SINGLE_TREE_SELECTION);
+        ingredientTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         JScrollPane treeScrollPane = new JScrollPane(ingredientTree);
         add(treeScrollPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Lataa raaka-aineet JSON-tiedostosta ja rakentaa puumaisen rakenteen
+     * raaka-ainepuulle.
+     */
     private void loadAndBuildTree() {
         List<IngredientData> ingredients = loadIngredientsFromJson("ingredients.json");
         if (ingredients == null) {
             rootNode.add(new DefaultMutableTreeNode("Error loading ingredients!"));
-            treeModel.reload(); 
+            treeModel.reload();
             System.err.println("Failed to load ingredients.");
             return;
         }
@@ -93,8 +101,7 @@ public class SidebarPanel extends JPanel {
             if (category == null || category.trim().isEmpty()) {
                 category = "Muut";
             }
-            categorizedIngredients.computeIfAbsent(category, k -> new ArrayList<>())
-                    .add(ingredient);
+            categorizedIngredients.computeIfAbsent(category, k -> new ArrayList<>()).add(ingredient);
         }
 
         rootNode.removeAllChildren();
@@ -116,7 +123,13 @@ public class SidebarPanel extends JPanel {
             }
         }
     }
-    
+
+    /**
+     * Lataa raaka-aineet JSON-resurssitiedostosta.
+     *
+     * @param resourcePath JSON-resurssitiedoston polku
+     * @return lista IngredientData-olioita tai null, jos lataus epäonnistuu
+     */
     private List<IngredientData> loadIngredientsFromJson(String resourcePath) {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
         if (inputStream == null) {
@@ -125,8 +138,7 @@ public class SidebarPanel extends JPanel {
         }
         try (Reader reader = new InputStreamReader(inputStream)) {
             Gson gson = new Gson();
-            Type ingredientListType = new TypeToken<ArrayList<IngredientData>>() {
-            }.getType();
+            Type ingredientListType = new TypeToken<ArrayList<IngredientData>>() {}.getType();
             return gson.fromJson(reader, ingredientListType);
         } catch (Exception e) {
             System.err.println("Error reading or parsing JSON resource: " + resourcePath);
@@ -135,13 +147,9 @@ public class SidebarPanel extends JPanel {
         }
     }
 
-    public String getSearchTerm() {
-        return searchField.getText();
-    }
+    public String getSearchTerm() { return searchField.getText(); }
 
-    public JTree getIngredientTree() {
-        return ingredientTree;
-    }
+    public JTree getIngredientTree() { return ingredientTree; }
 
     public List<String> getSelectedIngredients() {
         List<String> selected = new ArrayList<>();
@@ -154,7 +162,7 @@ public class SidebarPanel extends JPanel {
         if (node.isLeaf() && userObject instanceof CheckableNodeData) {
             CheckableNodeData data = (CheckableNodeData) userObject;
             if (data.isChecked()) {
-                checkedItems.add(data.getText());
+                checkedItems.add(data.getName());
             }
         } else {
             for (int i = 0; i < node.getChildCount(); i++) {

@@ -1,13 +1,20 @@
 package dev.otorniko;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
+import java.awt.BorderLayout;
+
+/**
+ * Luokka, joka esittää pääalueen paneelin, joka sisältää käyttöliittymän
+ * ohjauspaneelin, tulospaneelin ja reseptin yksityiskohtaisen paneelin. Tämä
+ * luokka käyttää JPanel-luokkaa käyttöliittymän rakentamiseen.
+ */
 public class MainAreaPanel extends JPanel {
-
     private ControlsPanel controlsPanel;
     private ResultsPanel resultsPanel;
-    private JScrollPane resultsScrollPane; 
+    private JScrollPane resultsScrollPane;
     private RecipeDetailPanel detailPanel;
 
     public MainAreaPanel() {
@@ -32,6 +39,7 @@ public class MainAreaPanel extends JPanel {
             remove(detailPanel);
             detailPanel = null;
         }
+
         remove(resultsScrollPane);
         detailPanel = new RecipeDetailPanel(recipe);
         detailPanel.getBackButton().addActionListener(e -> showResults());
@@ -45,20 +53,15 @@ public class MainAreaPanel extends JPanel {
             remove(detailPanel);
             detailPanel = null;
         }
+
         add(resultsScrollPane, BorderLayout.CENTER);
         revalidate();
         repaint();
     }
 
-    public ControlsPanel getControlsPanel() {
-        return controlsPanel;
-    }
-    
-    public ResultsPanel getResultsPanel() {
-        return resultsPanel;
-    }
+    public ControlsPanel getControlsPanel() { return controlsPanel; }
 
-    public RecipeDetailPanel getDetailPanel() {
-        return detailPanel;
-    }
+    public ResultsPanel getResultsPanel() { return resultsPanel; }
+
+    public RecipeDetailPanel getDetailPanel() { return detailPanel; }
 }

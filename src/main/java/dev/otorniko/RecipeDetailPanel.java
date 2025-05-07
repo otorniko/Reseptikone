@@ -5,16 +5,28 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * Luokka, joka esittää reseptin yksityiskohtia. Tämä luokka sisältää reseptin
+ * nimen, valmistusajan, annosten määrän, raaka-aineet ja valmistusohjeet.
+ * Luokka käyttää JPanel-luokkaa käyttöliittymän rakentamiseen ja esittää
+ * reseptin tiedot käyttöliittymässä.
+ */
 public class RecipeDetailPanel extends JPanel {
 
     private JButton backButton;
 
+    /**
+     * Luo RecipeDetailPanel-olion, joka näyttää yksityiskohtaiset tiedot
+     * reseptistä.
+     * 
+     * @param recipe näytettävän reseptin tiedot
+     */
     public RecipeDetailPanel(RecipeData recipe) {
         super(new BorderLayout(10, 10));
 
         Border visibleBorder = BorderFactory.createEtchedBorder();
         Border paddingBorder = BorderFactory.createEmptyBorder(10, 10, 10, 10);
-        
+
         this.setBorder(BorderFactory.createCompoundBorder(visibleBorder, paddingBorder));
 
         JPanel headerPanel = new JPanel(new BorderLayout(10, 0));
@@ -35,7 +47,8 @@ public class RecipeDetailPanel extends JPanel {
         infoIngredientsPanel.setLayout(new BoxLayout(infoIngredientsPanel, BoxLayout.Y_AXIS));
         infoIngredientsPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-        JLabel infoLabel = new JLabel(String.format("Aika: %d min | Annos: %d", recipe.getTimeMinutes(), recipe.getPortions()));
+        JLabel infoLabel = new JLabel(
+                String.format("Aika: %d min | Annos: %d", recipe.getTimeMinutes(), recipe.getPortions()));
         infoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         infoIngredientsPanel.add(infoLabel);
         infoIngredientsPanel.add(Box.createVerticalStrut(10));
@@ -66,8 +79,13 @@ public class RecipeDetailPanel extends JPanel {
         JTextArea stepsArea = new JTextArea();
         List<String> steps = recipe.getSteps();
 
-        if (steps != null) { for (int i = 0; i < steps.size(); i++) { stepsArea.append((i + 1) + ". " + steps.get(i) + "\n"); } }
-        else { stepsArea.setText("Ohjeita ei löytynyt."); }
+        if (steps != null) {
+            for (int i = 0; i < steps.size(); i++) {
+                stepsArea.append((i + 1) + ". " + steps.get(i) + "\n");
+            }
+        } else {
+            stepsArea.setText("Ohjeita ei löytynyt.");
+        }
 
         stepsArea.setEditable(false);
         stepsArea.setLineWrap(true);
@@ -83,7 +101,5 @@ public class RecipeDetailPanel extends JPanel {
         add(mainContentPanel, BorderLayout.CENTER);
     }
 
-    public JButton getBackButton() {
-        return backButton;
-    }
+    public JButton getBackButton() { return backButton; }
 }

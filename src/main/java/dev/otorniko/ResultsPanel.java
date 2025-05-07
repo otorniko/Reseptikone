@@ -7,6 +7,12 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Luokka, joka esittää löydetyt reseoptit graafisessa käyttöliittymässä. Tämä
+ * luokka käyttää JPanel-luokkaa käyttöliittymän rakentamiseen ja esittää
+ * reseptit kortteina, jotka sisältävät reseptin nimen, valmistusajan, annosten
+ * määrän ja raaka-aineet.
+ */
 public class ResultsPanel extends JPanel {
 
     private JLabel statusLabel;
@@ -18,9 +24,7 @@ public class ResultsPanel extends JPanel {
         showStatusMessage("Valitse raaka-aineita löytääksesi reseptejä.");
     }
 
-    public void setRecipeActionCallback(Consumer<RecipeData> callback) {
-        this.recipeActionCallback = callback;
-    }
+    public void setRecipeActionCallback(Consumer<RecipeData> callback) { this.recipeActionCallback = callback; }
 
     private void initComponents() {
         statusLabel = new JLabel();
@@ -30,10 +34,13 @@ public class ResultsPanel extends JPanel {
     }
 
     @Override
-    public void removeAll() {
-        super.removeAll();
-    }
+    public void removeAll() { super.removeAll(); }
 
+    /**
+     * Näyttää tilaviestin tulospaneelissa.
+     * 
+     * @param message näytettävä viesti
+     */
     public void showStatusMessage(String message) {
         removeAll();
         setLayout(new GridBagLayout());
@@ -43,8 +50,13 @@ public class ResultsPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Näyttää reseptilistan tulospaneelissa.
+     * 
+     * @param recipes lista näytettäviä reseptejä
+     */
     public void displayRecipes(List<RecipeData> recipes) {
-        
+
         removeAll();
         setLayout(new WrapLayout(WrapLayout.CENTER, 10, 10));
 
@@ -56,6 +68,12 @@ public class ResultsPanel extends JPanel {
         repaint();
     }
 
+    /**
+     * Luo korttikomponentin reseptille.
+     * 
+     * @param recipe reseptin tiedot, jotka näytetään kortilla
+     * @return JPanel, joka edustaa reseptikorttia
+     */
     private JPanel createRecipeCard(final RecipeData recipe) {
         JPanel card = new JPanel(new BorderLayout(5, 5));
         card.setBorder(BorderFactory.createEtchedBorder());
@@ -64,11 +82,8 @@ public class ResultsPanel extends JPanel {
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
         card.add(titleLabel, BorderLayout.NORTH);
 
-        JTextArea detailsArea = new JTextArea(
-            "Aika: " + recipe.getTimeMinutes() + " min\n" +
-            "Annos: " + recipe.getPortions() + "\n" +
-            "Ainekset: " + String.join(", ", recipe.getIngredients())
-        );
+        JTextArea detailsArea = new JTextArea("Aika: " + recipe.getTimeMinutes() + " min\n" + "Annos: "
+                + recipe.getPortions() + "\n" + "Ainekset: " + String.join(", ", recipe.getIngredients()));
         detailsArea.setEditable(false);
         detailsArea.setLineWrap(true);
         detailsArea.setWrapStyleWord(true);
@@ -81,17 +96,19 @@ public class ResultsPanel extends JPanel {
 
         card.setPreferredSize(new Dimension(220, 180));
         card.addMouseListener(new MouseAdapter() {
-             @Override
+            @Override
             public void mousePressed(MouseEvent e) {
                 if (recipeActionCallback != null) {
                     recipeActionCallback.accept(recipe);
                 }
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
                 card.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
                 card.setBackground(Color.LIGHT_GRAY);
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
                 card.setCursor(Cursor.getDefaultCursor());
