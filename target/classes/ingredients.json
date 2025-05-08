@@ -1,0 +1,122 @@
+[
+  {
+    "name": "Sokeri",
+    "category": "Mausteet",
+    "tags": ["Spice", "Sweetener", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Suola",
+    "category": "Mausteet",
+    "tags": ["Spice", "Seasoning", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Mustapippuri",
+    "category": "Mausteet",
+    "tags": ["Spice", "Seasoning", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Peruna",
+    "category": "Kasvikset",
+    "tags": ["Vegetable", "Vegetarian", "Vegan", "Root"]
+  },
+  {
+    "name": "Porkkana",
+    "category": "Kasvikset",
+    "tags": ["Vegetable", "Vegetarian", "Vegan", "Root"]
+  },
+  {
+    "name": "Sipuli",
+    "category": "Kasvikset",
+    "tags": ["Vegetable", "Vegetarian", "Vegan", "Aromatic"]
+  },
+  {
+    "name": "Tomaatti",
+    "category": "Kasvikset",
+    "tags": ["Vegetable", "Fruit", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Kurkku",
+    "category": "Kasvikset",
+    "tags": ["Vegetable", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Paprika",
+    "category": "Kasvikset",
+    "tags": ["Vegetable", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Ankanmaksa",
+    "category": "Proteiinit",
+    "tags": ["Protein", "Meat"]
+  },
+  {
+    "name": "Jauheliha",
+    "category": "Proteiinit",
+    "tags": ["Protein", "Meat"]
+  },
+  {
+    "name": "Lohi",
+    "category": "Proteiinit",
+    "tags": ["Protein", "Fish", "Seafood"]
+  },
+  {
+    "name": "Kana",
+    "category": "Proteiinit",
+    "tags": ["Protein", "Poultry"]
+  },
+  {
+    "name": "Tofu",
+    "category": "Proteiinit",
+    "tags": ["Protein", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Kikherne",
+    "category": "Proteiinit",
+    "tags": ["Protein", "Legume", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Oliiviöljy",
+    "category": "Öljyt ja Rasvat",
+    "tags": ["Oil", "Fat", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Voi",
+    "category": "Öljyt ja Rasvat",
+    "tags": ["Fat", "Dairy", "Vegetarian"]
+  },
+  {
+    "name": "Pasta",
+    "category": "Viljatuotteet",
+    "tags": ["Grain", "Carbohydrate", "Vegetarian", "CanBeVegan"]
+  },
+  {
+    "name": "Riisi",
+    "category": "Viljatuotteet",
+    "tags": ["Grain", "Carbohydrate", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Leipä",
+    "category": "Viljatuotteet",
+    "tags": ["Grain", "Carbohydrate", "Vegetarian", "CanBeVegan"]
+  },
+  {
+    "name": "Valkosipuli",
+    "category": "Mausteet",
+    "tags": ["Vegetable", "Aromatic", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Chili",
+    "category": "Mausteet",
+    "tags": ["Spice", "Hot", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Basilika",
+    "category": "Yrtit",
+    "tags": ["Herb", "Vegetarian", "Vegan"]
+  },
+  {
+    "name": "Oregano",
+    "category": "Yrtit",
+    "tags": ["Herb", "Vegetarian", "Vegan"]
+  }
+]
