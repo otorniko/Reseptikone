@@ -5,9 +5,11 @@ import com.google.gson.Gson;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.Image;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL; 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,6 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
@@ -70,6 +74,45 @@ public class RecipeApp extends JFrame {
         });
 
         SwingUtilities.invokeLater(this::updateFilteredRecipes);
+
+        List<Image> icons = new ArrayList<>();
+        try {
+            URL icon16URL = getClass().getResource("/icons/icon16px.png");
+            URL icon24URL = getClass().getResource("/icons/icon24px.png");
+            URL icon32URL = getClass().getResource("/icons/icon32px.png");
+            URL icon48URL = getClass().getResource("/icons/icon48px.png");
+            URL icon64URL = getClass().getResource("/icons/icon64px.png");
+            URL icon128URL = getClass().getResource("/icons/icon128px.png");
+            URL icon256URL = getClass().getResource("/icons/icon256px.png");
+            URL icon512URL = getClass().getResource("/icons/icon512px.png");
+
+            if (icon16URL != null)
+                icons.add(new ImageIcon(icon16URL).getImage());
+            if (icon24URL != null)
+                icons.add(new ImageIcon(icon24URL).getImage());
+            if (icon32URL != null)
+                icons.add(new ImageIcon(icon32URL).getImage());
+            if (icon48URL != null)
+                icons.add(new ImageIcon(icon48URL).getImage());
+            if (icon64URL != null)
+                icons.add(new ImageIcon(icon64URL).getImage());
+            if (icon128URL != null)
+                icons.add(new ImageIcon(icon128URL).getImage());
+            if (icon256URL != null)
+                icons.add(new ImageIcon(icon256URL).getImage());
+            if (icon512URL != null)
+                icons.add(new ImageIcon(icon512URL).getImage());
+
+            if (!icons.isEmpty()) {
+                setIconImages(icons);
+            } else {
+                System.err.println("Icon images not found or list is empty.");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error loading icons: " + e.getMessage());
+            e.printStackTrace();
+        }
 
     }
 

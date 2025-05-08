@@ -54,9 +54,35 @@ public class SidebarPanel extends JPanel {
     public void setSelectionChangeCallback(Runnable callback) { this.onSelectionChangeCallback = callback; }
 
     private void initComponents() {
-        JPanel searchPanel = new JPanel(new BorderLayout(5, 0));
+        JPanel topPanel = new JPanel(new BorderLayout(0, 5));
+        JLabel titleLabel = new JLabel("Raaka-aineet");
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f)); 
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0)); 
+
         searchField = new JTextField();
         setPlaceholder();
+
+        clearSearchButton = new JButton("X");
+        clearSearchButton.setToolTipText("Tyhjennä haku");
+        clearSearchButton.setMargin(new Insets(1, 2, 1, 2)); 
+        clearSearchButton.addActionListener(e -> {
+            searchField.setText("");
+            setPlaceholder();
+            filterAndRebuildTree();
+            if (onSelectionChangeCallback != null) { 
+                onSelectionChangeCallback.run();
+            }
+        });
+        
+    
+        JPanel searchBarPanel = new JPanel(new BorderLayout());
+        searchBarPanel.add(searchField, BorderLayout.CENTER);
+        searchBarPanel.add(clearSearchButton, BorderLayout.EAST); 
+        
+        topPanel.add(titleLabel, BorderLayout.NORTH);          
+        topPanel.add(searchBarPanel, BorderLayout.CENTER); 
+        add(topPanel, BorderLayout.NORTH);
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             public void insertUpdate(DocumentEvent e) {
@@ -95,22 +121,8 @@ public class SidebarPanel extends JPanel {
                 }
             }
         });
-        searchPanel.add(searchField, BorderLayout.CENTER);
 
-        clearSearchButton = new JButton("X");
-        clearSearchButton.setToolTipText("Tyhjennä haku");
-        clearSearchButton.setMargin(new Insets(1, 2, 1, 2));
-        clearSearchButton.addActionListener(e -> {
-            searchField.setText("");
-            if (!searchField.hasFocus()) {
-                setPlaceholder();
-            }
 
-            filterAndRebuildTree();
-        });
-
-        searchPanel.add(clearSearchButton, BorderLayout.EAST);
-        add(searchPanel, BorderLayout.NORTH);
 
         rootNode = new DefaultMutableTreeNode("Raaka-aineet");
         treeModel = new DefaultTreeModel(rootNode);
