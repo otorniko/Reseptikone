@@ -101,5 +101,7 @@ public class RecipeDetailPanel extends JPanel {
         add(mainContentPanel, BorderLayout.CENTER);
     }
 
-    public JButton getBackButton() { return backButton; }
+    public JButton getBackButton() {
+        return backButton;
+    }
 }

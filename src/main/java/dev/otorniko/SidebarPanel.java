@@ -51,37 +51,38 @@ public class SidebarPanel extends JPanel {
         initComponents();
     }
 
-    public void setSelectionChangeCallback(Runnable callback) { this.onSelectionChangeCallback = callback; }
+    public void setSelectionChangeCallback(Runnable callback) {
+        this.onSelectionChangeCallback = callback;
+    }
 
     private void initComponents() {
         JPanel topPanel = new JPanel(new BorderLayout(0, 5));
         JLabel titleLabel = new JLabel("Raaka-aineet");
-        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f)); 
+        titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD, 14f));
         titleLabel.setHorizontalAlignment(JLabel.CENTER);
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0)); 
+        titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
 
         searchField = new JTextField();
         setPlaceholder();
 
         clearSearchButton = new JButton("X");
         clearSearchButton.setToolTipText("Tyhjennä haku");
-        clearSearchButton.setMargin(new Insets(1, 2, 1, 2)); 
+        clearSearchButton.setMargin(new Insets(1, 2, 1, 2));
         clearSearchButton.addActionListener(e -> {
             searchField.setText("");
             setPlaceholder();
             filterAndRebuildTree();
-            if (onSelectionChangeCallback != null) { 
+            if (onSelectionChangeCallback != null) {
                 onSelectionChangeCallback.run();
             }
         });
-        
-    
+
         JPanel searchBarPanel = new JPanel(new BorderLayout());
         searchBarPanel.add(searchField, BorderLayout.CENTER);
-        searchBarPanel.add(clearSearchButton, BorderLayout.EAST); 
-        
-        topPanel.add(titleLabel, BorderLayout.NORTH);          
-        topPanel.add(searchBarPanel, BorderLayout.CENTER); 
+        searchBarPanel.add(clearSearchButton, BorderLayout.EAST);
+
+        topPanel.add(titleLabel, BorderLayout.NORTH);
+        topPanel.add(searchBarPanel, BorderLayout.CENTER);
         add(topPanel, BorderLayout.NORTH);
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
@@ -100,7 +101,8 @@ public class SidebarPanel extends JPanel {
                 }
             }
 
-            public void changedUpdate(DocumentEvent e) {}
+            public void changedUpdate(DocumentEvent e) {
+            }
         });
 
         searchField.addFocusListener(new FocusAdapter() {
@@ -121,8 +123,6 @@ public class SidebarPanel extends JPanel {
                 }
             }
         });
-
-
 
         rootNode = new DefaultMutableTreeNode("Raaka-aineet");
         treeModel = new DefaultTreeModel(rootNode);
@@ -259,7 +259,8 @@ public class SidebarPanel extends JPanel {
         }
         try (Reader reader = new InputStreamReader(inputStream)) {
             Gson gson = new Gson();
-            Type ingredientListType = new TypeToken<ArrayList<IngredientData>>() {}.getType();
+            Type ingredientListType = new TypeToken<ArrayList<IngredientData>>() {
+            }.getType();
             List<IngredientData> loaded = gson.fromJson(reader, ingredientListType);
             if (loaded == null) {
                 System.err.println("Warning: Failed to parse ingredients or JSON file '" + resourcePath
@@ -295,9 +296,15 @@ public class SidebarPanel extends JPanel {
         return "";
     }
 
-    public String getSearchTerm() { return getSearchTermInternal(); }
+    public String getSearchTerm() {
+        return getSearchTermInternal();
+    }
 
-    public JTree getIngredientTree() { return ingredientTree; }
+    public JTree getIngredientTree() {
+        return ingredientTree;
+    }
 
-    public List<String> getSelectedIngredients() { return new ArrayList<>(centrallyCheckedIngredientNames); }
+    public List<String> getSelectedIngredients() {
+        return new ArrayList<>(centrallyCheckedIngredientNames);
+    }
 }

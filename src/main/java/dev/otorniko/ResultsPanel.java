@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * Luokka, joka esittää löydetyt reseoptit graafisessa käyttöliittymässä. Tämä
- * luokka käyttää JPanel-luokkaa käyttöliittymän rakentamiseen ja esittää
+ * Luokka, joka esittää löydetyt reseoptit graafisessa käyttöliittymässä.
+ * Käyttää JPanel-luokkaa käyttöliittymän rakentamiseen ja esittää
  * reseptit kortteina, jotka sisältävät reseptin nimen, valmistusajan, annosten
  * määrän ja raaka-aineet.
  */
@@ -25,7 +25,9 @@ public class ResultsPanel extends JPanel {
         showStatusMessage("Valitse raaka-aineita löytääksesi reseptejä.");
     }
 
-    public void setRecipeActionCallback(Consumer<RecipeData> callback) { this.recipeActionCallback = callback; }
+    public void setRecipeActionCallback(Consumer<RecipeData> callback) {
+        this.recipeActionCallback = callback;
+    }
 
     private void initComponents() {
         statusLabel = new JLabel();
@@ -35,7 +37,9 @@ public class ResultsPanel extends JPanel {
     }
 
     @Override
-    public void removeAll() { super.removeAll(); }
+    public void removeAll() {
+        super.removeAll();
+    }
 
     /**
      * Näyttää tilaviestin tulospaneelissa.

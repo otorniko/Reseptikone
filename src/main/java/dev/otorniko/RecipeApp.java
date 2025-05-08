@@ -3,13 +3,14 @@ package dev.otorniko;
 import com.google.gson.Gson;
 
 import java.awt.BorderLayout;
+import java.awt.Taskbar;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.Image;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URL; 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -73,8 +74,6 @@ public class RecipeApp extends JFrame {
             this.getRootPane().requestFocusInWindow();
         });
 
-        SwingUtilities.invokeLater(this::updateFilteredRecipes);
-
         List<Image> icons = new ArrayList<>();
         try {
             URL icon16URL = getClass().getResource("/icons/icon16px.png");
@@ -104,6 +103,14 @@ public class RecipeApp extends JFrame {
                 icons.add(new ImageIcon(icon512URL).getImage());
 
             if (!icons.isEmpty()) {
+                // Ikonit ei toimi MacOs ilman Taskbaria
+                if (Taskbar.isTaskbarSupported()) {
+                    Taskbar taskbar = Taskbar.getTaskbar();
+                    if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
+                        taskbar.setIconImage(icons.get(icons.size() - 1));
+                    }
+                }
+                // Aseta silti ikkunakuvakkeet normaalisti kaikkia alustoja varten
                 setIconImages(icons);
             } else {
                 System.err.println("Icon images not found or list is empty.");
@@ -131,7 +138,8 @@ public class RecipeApp extends JFrame {
 
         try (Reader reader = new InputStreamReader(inputStream)) {
             Gson gson = new Gson();
-            java.lang.reflect.Type recipeListType = new com.google.gson.reflect.TypeToken<ArrayList<RecipeData>>() {}
+            java.lang.reflect.Type recipeListType = new com.google.gson.reflect.TypeToken<ArrayList<RecipeData>>() {
+            }
                     .getType();
             this.allLoadedRecipes = gson.fromJson(reader, recipeListType);
             if (this.allLoadedRecipes == null) {
@@ -268,14 +276,14 @@ public class RecipeApp extends JFrame {
 
         if (sortOption != null) {
             switch (sortOption) {
-            case "Aika Lyhin":
-                filteredRecipes.sort(Comparator.comparingInt(RecipeData::getTimeMinutes));
-                break;
-            case "Nimi A-Ö":
-                filteredRecipes.sort(Comparator.comparing(RecipeData::getName, String.CASE_INSENSITIVE_ORDER));
-                break;
-            default:
-                break;
+                case "Aika Lyhin":
+                    filteredRecipes.sort(Comparator.comparingInt(RecipeData::getTimeMinutes));
+                    break;
+                case "Nimi A-Ö":
+                    filteredRecipes.sort(Comparator.comparing(RecipeData::getName, String.CASE_INSENSITIVE_ORDER));
+                    break;
+                default:
+                    break;
             }
         }
 
