@@ -3,7 +3,7 @@ package dev.otorniko;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
+import javax.swing.SwingUtilities;
 import java.awt.BorderLayout;
 
 /**
@@ -26,8 +26,10 @@ public class MainAreaPanel extends JPanel {
     private void initComponents() {
         controlsPanel = new ControlsPanel();
         add(controlsPanel, BorderLayout.NORTH);
+
         resultsPanel = new ResultsPanel();
         resultsPanel.setRecipeActionCallback(this::showRecipeDetails);
+
         resultsScrollPane = new JScrollPane(resultsPanel);
         resultsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         resultsScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -41,11 +43,19 @@ public class MainAreaPanel extends JPanel {
         }
 
         remove(resultsScrollPane);
+
         detailPanel = new RecipeDetailPanel(recipe);
         detailPanel.getBackButton().addActionListener(e -> showResults());
         add(detailPanel, BorderLayout.CENTER);
+
         revalidate();
         repaint();
+
+        SwingUtilities.invokeLater(() -> {
+            if (detailPanel != null) {
+                detailPanel.requestFocusInWindow();
+            }
+        });
     }
 
     private void showResults() {
@@ -55,8 +65,18 @@ public class MainAreaPanel extends JPanel {
         }
 
         add(resultsScrollPane, BorderLayout.CENTER);
+
         revalidate();
         repaint();
+
+        // Hakupalkin fokusoinnin estämiseks
+        SwingUtilities.invokeLater(() -> {
+            if (resultsPanel != null) {
+                resultsPanel.requestFocusInWindow();
+            } else if (resultsScrollPane != null) {
+                resultsScrollPane.requestFocusInWindow();
+            }
+        });
     }
 
     public ControlsPanel getControlsPanel() { return controlsPanel; }

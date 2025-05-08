@@ -20,6 +20,7 @@ public class ResultsPanel extends JPanel {
 
     public ResultsPanel() {
         super(new WrapLayout(WrapLayout.CENTER, 10, 10));
+        setFocusable(true);
         initComponents();
         showStatusMessage("Valitse raaka-aineita löytääksesi reseptejä.");
     }

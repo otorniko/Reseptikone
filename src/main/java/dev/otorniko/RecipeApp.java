@@ -17,6 +17,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 /**
@@ -27,26 +28,49 @@ public class RecipeApp extends JFrame {
     private SidebarPanel sidebarPanel;
     private MainAreaPanel mainAreaPanel;
     private List<RecipeData> allLoadedRecipes;
+    private JSplitPane splitPane;
 
     public RecipeApp() {
         super("Reseptikone");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(980, 600));
-        setLayout(new BorderLayout(5, 0));
+        setLayout(new BorderLayout());
 
         sidebarPanel = new SidebarPanel();
         mainAreaPanel = new MainAreaPanel();
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidebarPanel, mainAreaPanel);
 
-        int sidebarFixedWidth = 220;
-        sidebarPanel.setPreferredSize(new Dimension(sidebarFixedWidth, 0));
+        int initialSidebarWidth = 220;
+        int initialFrameWidth = getPreferredSize().width;
+
+        splitPane.setDividerLocation(initialSidebarWidth);
+
+        if (initialFrameWidth > 0) {
+            double sidebarProportion = (double) initialSidebarWidth / initialFrameWidth;
+            splitPane.setResizeWeight(sidebarProportion);
+        } else {
+            splitPane.setResizeWeight(0.22);
+        }
+
+        splitPane.setEnabled(false);
+        splitPane.setOneTouchExpandable(false);
+        splitPane.setContinuousLayout(true);
+
+        add(splitPane, BorderLayout.CENTER);
 
         loadRecipeData();
         setupActionListeners();
-        add(sidebarPanel, BorderLayout.WEST);
-        add(mainAreaPanel, BorderLayout.CENTER);
-        updateFilteredRecipes();
+
         pack();
         setLocationRelativeTo(null);
+
+        // En tykänny kuinka hakukenttä sai heti fokuksen
+        SwingUtilities.invokeLater(() -> {
+            this.getRootPane().requestFocusInWindow();
+        });
+
+        SwingUtilities.invokeLater(this::updateFilteredRecipes);
+
     }
 
     /**
