@@ -271,7 +271,7 @@ public class RecipeApp extends JFrame {
         }
 
         if (isKokoPerheelle) {
-            filteredRecipes = filteredRecipes.stream().filter(recipe -> recipe.getPortions() > 2)
+            filteredRecipes = filteredRecipes.stream().filter(recipe -> recipe.getPortions() > 3)
                     .collect(Collectors.toList());
         }
 

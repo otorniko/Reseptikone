@@ -57,10 +57,6 @@ public class RecipeData {
 
     public boolean isVegetarian() { return erityisruokavalio != null && erityisruokavalio.contains("vegetarian"); }
 
-    public boolean isGlutenFree() { return erityisruokavalio != null && erityisruokavalio.contains("gluten-free"); }
-
-    public boolean isDairyFree() { return erityisruokavalio != null && erityisruokavalio.contains("dairy-free"); }
-
     public boolean hasRestriction(String restriction) {
         return erityisruokavalio != null && erityisruokavalio.contains(restriction);
     }

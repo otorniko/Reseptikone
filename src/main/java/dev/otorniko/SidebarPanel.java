@@ -65,24 +65,8 @@ public class SidebarPanel extends JPanel {
         searchField = new JTextField();
         setPlaceholder();
 
-        clearSearchButton = new JButton("X");
-        clearSearchButton.setToolTipText("Tyhjennä haku");
-        clearSearchButton.setMargin(new Insets(1, 2, 1, 2));
-        clearSearchButton.addActionListener(e -> {
-            searchField.setText("");
-            setPlaceholder();
-            filterAndRebuildTree();
-            if (onSelectionChangeCallback != null) {
-                onSelectionChangeCallback.run();
-            }
-        });
-
-        JPanel searchBarPanel = new JPanel(new BorderLayout());
-        searchBarPanel.add(searchField, BorderLayout.CENTER);
-        searchBarPanel.add(clearSearchButton, BorderLayout.EAST);
-
         topPanel.add(titleLabel, BorderLayout.NORTH);
-        topPanel.add(searchBarPanel, BorderLayout.CENTER);
+        topPanel.add(searchField, BorderLayout.CENTER);
         add(topPanel, BorderLayout.NORTH);
 
         searchField.getDocument().addDocumentListener(new DocumentListener() {
