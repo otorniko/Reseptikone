@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 public class SidebarPanel extends JPanel {
 
     private JTextField searchField;
-    private JButton clearSearchButton;
     private JTree ingredientTree;
     private DefaultTreeModel treeModel;
     private DefaultMutableTreeNode rootNode;
