@@ -3,7 +3,7 @@ package dev.otorniko;
 import java.util.List;
 
 /**
- * Luokka, joka sisältää reseptin tiedot. Tämä luokka on tarkoitettu
+ * Luokka, joka sisältää reseptin tiedot. Luokka on tarkoitettu
  * käytettäväksi reseptien käsittelyssä ja esittämisessä. Se sisältää getterit
  * ja setterit reseptin nimen, raaka-aineiden, valmistusajan, annosten määrän,
  * erityisruokavalion ja valmistusvaiheiden käsittelyyn.
@@ -56,10 +56,6 @@ public class RecipeData {
     public boolean isVegan() { return erityisruokavalio != null && erityisruokavalio.contains("vegan"); }
 
     public boolean isVegetarian() { return erityisruokavalio != null && erityisruokavalio.contains("vegetarian"); }
-
-    public boolean isGlutenFree() { return erityisruokavalio != null && erityisruokavalio.contains("gluten-free"); }
-
-    public boolean isDairyFree() { return erityisruokavalio != null && erityisruokavalio.contains("dairy-free"); }
 
     public boolean hasRestriction(String restriction) {
         return erityisruokavalio != null && erityisruokavalio.contains(restriction);

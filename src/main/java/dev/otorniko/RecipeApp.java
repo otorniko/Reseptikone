@@ -3,11 +3,14 @@ package dev.otorniko;
 import com.google.gson.Gson;
 
 import java.awt.BorderLayout;
+import java.awt.Taskbar;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.Image;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,38 +18,109 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 /**
  * Reseptikoneen pääluokka, joka hallitsee käyttöliittymää ja reseptien
- * suodattamista. Käyttää Gson-kirjastoa JSON-tiedostojen käsittelyyn.
+ * suodattamista.
  */
 public class RecipeApp extends JFrame {
-    private SidebarPanel sidebarPanel;
-    private MainAreaPanel mainAreaPanel;
-    private List<RecipeData> allLoadedRecipes;
+    private SidebarPanel sidebarPanel; // Sivupaneeli, joka sisältää "otsikon", raaka-aineet ja hakupalkin
+    private MainAreaPanel mainAreaPanel; // Pääalueen paneeli, joka sisältää tulokset ja reseptin yksityiskohdat
+    private List<RecipeData> allLoadedRecipes; // Kaikki ladatut reseptit
+    private JSplitPane splitPane; // Että sivupaneelin koko pysyy oikeassa suhteessa pääpaneeliin ikkunaa suurennettaessa
 
     public RecipeApp() {
         super("Reseptikone");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(980, 600));
-        setLayout(new BorderLayout(5, 0));
+        setLayout(new BorderLayout());
 
         sidebarPanel = new SidebarPanel();
         mainAreaPanel = new MainAreaPanel();
+        splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sidebarPanel, mainAreaPanel);
 
-        int sidebarFixedWidth = 220;
-        sidebarPanel.setPreferredSize(new Dimension(sidebarFixedWidth, 0));
+        int initialSidebarWidth = 220;
+        int initialFrameWidth = getPreferredSize().width;
+
+        splitPane.setDividerLocation(initialSidebarWidth);
+
+        if (initialFrameWidth > 0) {
+            double sidebarProportion = (double) initialSidebarWidth / initialFrameWidth;
+            splitPane.setResizeWeight(sidebarProportion);
+        } else {
+            splitPane.setResizeWeight(0.22);
+        }
+
+        splitPane.setEnabled(false);
+        splitPane.setOneTouchExpandable(false);
+        splitPane.setContinuousLayout(true);
+
+        add(splitPane, BorderLayout.CENTER);
 
         loadRecipeData();
         setupActionListeners();
-        add(sidebarPanel, BorderLayout.WEST);
-        add(mainAreaPanel, BorderLayout.CENTER);
-        updateFilteredRecipes();
+
         pack();
         setLocationRelativeTo(null);
+
+        // En tykänny kuinka hakukenttä sai heti fokuksen
+        SwingUtilities.invokeLater(() -> {
+            this.getRootPane().requestFocusInWindow();
+        });
+
+        List<Image> icons = new ArrayList<>();
+        try {
+            URL icon16URL = getClass().getResource("/icons/icon16px.png");
+            URL icon24URL = getClass().getResource("/icons/icon24px.png");
+            URL icon32URL = getClass().getResource("/icons/icon32px.png");
+            URL icon48URL = getClass().getResource("/icons/icon48px.png");
+            URL icon64URL = getClass().getResource("/icons/icon64px.png");
+            URL icon128URL = getClass().getResource("/icons/icon128px.png");
+            URL icon256URL = getClass().getResource("/icons/icon256px.png");
+            URL icon512URL = getClass().getResource("/icons/icon512px.png");
+
+            if (icon16URL != null)
+                icons.add(new ImageIcon(icon16URL).getImage());
+            if (icon24URL != null)
+                icons.add(new ImageIcon(icon24URL).getImage());
+            if (icon32URL != null)
+                icons.add(new ImageIcon(icon32URL).getImage());
+            if (icon48URL != null)
+                icons.add(new ImageIcon(icon48URL).getImage());
+            if (icon64URL != null)
+                icons.add(new ImageIcon(icon64URL).getImage());
+            if (icon128URL != null)
+                icons.add(new ImageIcon(icon128URL).getImage());
+            if (icon256URL != null)
+                icons.add(new ImageIcon(icon256URL).getImage());
+            if (icon512URL != null)
+                icons.add(new ImageIcon(icon512URL).getImage());
+
+            if (!icons.isEmpty()) {
+                // Ikonit ei toimi MacOs ilman Taskbaria
+                if (Taskbar.isTaskbarSupported()) {
+                    Taskbar taskbar = Taskbar.getTaskbar();
+                    if (taskbar.isSupported(Taskbar.Feature.ICON_IMAGE)) {
+                        taskbar.setIconImage(icons.get(icons.size() - 1));
+                    }
+                }
+                // Aseta silti ikkunakuvakkeet normaalisti kaikkia alustoja varten
+                setIconImages(icons);
+            } else {
+                System.err.println("Icon images not found or list is empty.");
+            }
+
+        } catch (Exception e) {
+            System.err.println("Error loading icons: " + e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -55,6 +129,7 @@ public class RecipeApp extends JFrame {
     private void loadRecipeData() {
         String resourcePath = "recipes.json";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
+        
         if (inputStream == null) {
             JOptionPane.showMessageDialog(this, "Virhe: Reseptitiedostoa '" + resourcePath + "' ei löytynyt!",
                     "Lukuvirhe", JOptionPane.ERROR_MESSAGE);
@@ -64,7 +139,8 @@ public class RecipeApp extends JFrame {
 
         try (Reader reader = new InputStreamReader(inputStream)) {
             Gson gson = new Gson();
-            java.lang.reflect.Type recipeListType = new com.google.gson.reflect.TypeToken<ArrayList<RecipeData>>() {}
+            java.lang.reflect.Type recipeListType = new com.google.gson.reflect.TypeToken<ArrayList<RecipeData>>() {
+            }
                     .getType();
             this.allLoadedRecipes = gson.fromJson(reader, recipeListType);
             if (this.allLoadedRecipes == null) {
@@ -195,20 +271,20 @@ public class RecipeApp extends JFrame {
         }
 
         if (isKokoPerheelle) {
-            filteredRecipes = filteredRecipes.stream().filter(recipe -> recipe.getPortions() > 2)
+            filteredRecipes = filteredRecipes.stream().filter(recipe -> recipe.getPortions() > 3)
                     .collect(Collectors.toList());
         }
 
         if (sortOption != null) {
             switch (sortOption) {
-            case "Aika Lyhin":
-                filteredRecipes.sort(Comparator.comparingInt(RecipeData::getTimeMinutes));
-                break;
-            case "Nimi A-Ö":
-                filteredRecipes.sort(Comparator.comparing(RecipeData::getName, String.CASE_INSENSITIVE_ORDER));
-                break;
-            default:
-                break;
+                case "Aika Lyhin":
+                    filteredRecipes.sort(Comparator.comparingInt(RecipeData::getTimeMinutes));
+                    break;
+                case "Nimi A-Ö":
+                    filteredRecipes.sort(Comparator.comparing(RecipeData::getName, String.CASE_INSENSITIVE_ORDER));
+                    break;
+                default:
+                    break;
             }
         }
 
