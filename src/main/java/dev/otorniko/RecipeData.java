@@ -3,7 +3,7 @@ package dev.otorniko;
 import java.util.List;
 
 /**
- * Luokka, joka sisältää reseptin tiedot. Tämä luokka on tarkoitettu
+ * Luokka, joka sisältää reseptin tiedot. Luokka on tarkoitettu
  * käytettäväksi reseptien käsittelyssä ja esittämisessä. Se sisältää getterit
  * ja setterit reseptin nimen, raaka-aineiden, valmistusajan, annosten määrän,
  * erityisruokavalion ja valmistusvaiheiden käsittelyyn.

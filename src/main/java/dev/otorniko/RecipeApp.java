@@ -27,13 +27,13 @@ import javax.swing.SwingUtilities;
 
 /**
  * Reseptikoneen pääluokka, joka hallitsee käyttöliittymää ja reseptien
- * suodattamista. Käyttää Gson-kirjastoa JSON-tiedostojen käsittelyyn.
+ * suodattamista.
  */
 public class RecipeApp extends JFrame {
-    private SidebarPanel sidebarPanel;
-    private MainAreaPanel mainAreaPanel;
-    private List<RecipeData> allLoadedRecipes;
-    private JSplitPane splitPane;
+    private SidebarPanel sidebarPanel; // Sivupaneeli, joka sisältää "otsikon", raaka-aineet ja hakupalkin
+    private MainAreaPanel mainAreaPanel; // Pääalueen paneeli, joka sisältää tulokset ja reseptin yksityiskohdat
+    private List<RecipeData> allLoadedRecipes; // Kaikki ladatut reseptit
+    private JSplitPane splitPane; // Että sivupaneelin koko pysyy oikeassa suhteessa pääpaneeliin ikkunaa suurennettaessa
 
     public RecipeApp() {
         super("Reseptikone");
@@ -129,6 +129,7 @@ public class RecipeApp extends JFrame {
     private void loadRecipeData() {
         String resourcePath = "recipes.json";
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream(resourcePath);
+        
         if (inputStream == null) {
             JOptionPane.showMessageDialog(this, "Virhe: Reseptitiedostoa '" + resourcePath + "' ei löytynyt!",
                     "Lukuvirhe", JOptionPane.ERROR_MESSAGE);

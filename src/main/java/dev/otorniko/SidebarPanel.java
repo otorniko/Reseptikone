@@ -268,6 +268,7 @@ public class SidebarPanel extends JPanel {
                 return new ArrayList<>();
             }
             return loaded;
+            //ei toiminut ku importtas gson:sta :DDD
         } catch (com.google.gson.JsonSyntaxException e) {
             System.err.println("FATAL ERROR: Invalid JSON syntax in " + resourcePath);
             e.printStackTrace();
@@ -296,15 +297,9 @@ public class SidebarPanel extends JPanel {
         return "";
     }
 
-    public String getSearchTerm() {
-        return getSearchTermInternal();
-    }
+    public String getSearchTerm() { return getSearchTermInternal(); }
 
-    public JTree getIngredientTree() {
-        return ingredientTree;
-    }
+    public JTree getIngredientTree() { return ingredientTree; }
 
-    public List<String> getSelectedIngredients() {
-        return new ArrayList<>(centrallyCheckedIngredientNames);
-    }
+    public List<String> getSelectedIngredients() { return new ArrayList<>(centrallyCheckedIngredientNames); }
 }

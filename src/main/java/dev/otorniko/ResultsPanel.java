@@ -61,10 +61,8 @@ public class ResultsPanel extends JPanel {
      * @param recipes lista näytettäviä reseptejä
      */
     public void displayRecipes(List<RecipeData> recipes) {
-
         removeAll();
         setLayout(new WrapLayout(WrapLayout.CENTER, 10, 10));
-
         for (RecipeData recipe : recipes) {
             JPanel recipePanel = createRecipeCard(recipe);
             add(recipePanel);
@@ -82,11 +80,13 @@ public class ResultsPanel extends JPanel {
     private JPanel createRecipeCard(final RecipeData recipe) {
         JPanel card = new JPanel(new BorderLayout(5, 5));
         card.setBorder(BorderFactory.createEtchedBorder());
-
+        
+        // nimi
         JLabel titleLabel = new JLabel(recipe.getName());
         titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
         card.add(titleLabel, BorderLayout.NORTH);
 
+        // aika, annokset ja ainekset
         JTextArea detailsArea = new JTextArea("Aika: " + recipe.getTimeMinutes() + " min\n" + "Annos: "
                 + recipe.getPortions() + "\n" + "Ainekset: " + String.join(", ", recipe.getIngredients()));
         detailsArea.setEditable(false);
@@ -94,12 +94,11 @@ public class ResultsPanel extends JPanel {
         detailsArea.setWrapStyleWord(true);
         detailsArea.setOpaque(false);
         detailsArea.setFont(UIManager.getFont("Label.font"));
-
         JScrollPane detailsScrollPane = new JScrollPane(detailsArea);
         detailsScrollPane.setBorder(null);
         card.add(detailsScrollPane, BorderLayout.CENTER);
-
         card.setPreferredSize(new Dimension(220, 180));
+
         card.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

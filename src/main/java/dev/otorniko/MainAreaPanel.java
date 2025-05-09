@@ -8,8 +8,8 @@ import java.awt.BorderLayout;
 
 /**
  * Luokka, joka esittää pääalueen paneelin, joka sisältää käyttöliittymän
- * ohjauspaneelin, tulospaneelin ja reseptin yksityiskohtaisen paneelin. Tämä
- * luokka käyttää JPanel-luokkaa käyttöliittymän rakentamiseen.
+ * ohjauspaneelin, tulospaneelin ja reseptin yksityiskohtaisen paneelin. 
+ * Käyttää JPanel-luokkaa käyttöliittymän rakentamiseen.
  */
 public class MainAreaPanel extends JPanel {
     private ControlsPanel controlsPanel;
@@ -69,7 +69,7 @@ public class MainAreaPanel extends JPanel {
         revalidate();
         repaint();
 
-        // Hakupalkin fokusoinnin estämiseks
+        // Hakupalkin fokusoinnin estämiseksi
         SwingUtilities.invokeLater(() -> {
             if (resultsPanel != null) {
                 resultsPanel.requestFocusInWindow();
